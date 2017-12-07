@@ -1,0 +1,103 @@
+<ion-header class="header header-ios" ion-fixed>
+    <ion-navbar class="toolbar toolbar-ios toolbar-ios-primary" color="primary" ng-reflect-color="primary">
+      <ion-buttons left class="bar-buttons bar-buttons-ios">
+        <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate">
+          <ion-icon name="md-arrow-back"></ion-icon>
+        </button>
+        <h3 class="toolbar-title-ios" style="display:inline;position: relative;top: 6px;">{{ viewDate }}</h3>
+        <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate">
+          <ion-icon name="md-arrow-forward"></ion-icon>
+        </button>
+        <!-- <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+          (click)="view = 'day'">
+          Today
+        </button> -->
+      </ion-buttons>
+  
+      <!-- <ion-buttons center class="bar-buttons bar-buttons-ios calendar-view-modes">
+        <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios calendar-view-mode"
+          (click)="view = 'month'"
+          [class.active]="view === 'month'">
+          Month
+        </button>
+        <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios calendar-view-mode"
+          (click)="view = 'week'"
+          [class.active]="view === 'week'">
+          Week
+        </button>
+        <button
+          class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios calendar-view-mode"
+          (click)="view = 'day'"
+          [class.active]="view === 'day'">
+                  Day
+        </button>
+  
+      </ion-buttons> -->
+  
+      <!-- <ion-buttons right class="bar-buttons bar-buttons-ios">
+        <button (click)="scheduleMeeting('New',event)" class="inde-button bar-button bar-button-ios bar-button-clear bar-button-clear-ios">
+            Schedule
+        </button>
+      </ion-buttons> -->
+    </ion-navbar>
+  </ion-header>
+  
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+      <span class="cal-day-number">{{ day.date }}</span>
+    </div>
+    <div class="cal-events">
+      <div  class="cal-event"
+       *ngFor="let event of day.events | slice:0:5"
+       [style.backgroundColor]="event.color.primary"
+       [ngClass]="event?.cssClass"
+       (click)="handleEvent('Clicked', event)">
+        {{ event.title }}
+      </div>
+      <button *ngIf="day.events.length > 5" (click)="showMoreEvents(day.events['0'].start)" style="text-align: center; width: 100%;">Show More...</button>
+    </div>
+  </ng-template>
+  
+  
+  <ion-content class="inde-calendar-content" [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      [cellTemplate]="customCellTemplate">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="'week'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+  </ion-content>
+  

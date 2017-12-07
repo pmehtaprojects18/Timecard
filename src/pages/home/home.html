@@ -1,18 +1,45 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="danger">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Timecard</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<ion-content >
+  <ion-card color="light">
+    <div padding-top>
+      <h1>{{today._date}}</h1><br>
+      <p class="time-remaining">7hrs 11mins</p>
+    </div>
+  </ion-card>
+  <ion-list>
+    <ion-item>
+        <ion-icon name='home' item-start color="secondary"></ion-icon>
+        <ion-label color="dark">Workplaces</ion-label>
+        <ion-select [(ngModel)]="workplace" interface="popover">
+          <ion-option *ngFor="let wp of workPlaces" [value]="wp.id" [selected]="wp.selected" >{{wp.name}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name='time' item-start color="secondary"></ion-icon>
+      <ion-label>Schedule Start</ion-label>
+      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="s_start"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-icon name='clock' item-start color="danger"></ion-icon>
+      <ion-label>Schedule End</ion-label>
+      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="s_end"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-textarea placeholder="Enter a note"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-footer>
+    <button type="button" ion-button color="secondary" full large text-center>Start</button>
+</ion-footer>

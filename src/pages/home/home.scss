@@ -1,3 +1,20 @@
 page-home {
+    .item-block{
+        margin-top: 30px!important;
+        margin-bottom: 30px!important;
+    }
+    .item-inner{
+        margin-left: 5px!important;
+    }
 
+    ion-card{
+        height:150px;
+        div{
+            text-align: center;
+            .time-remaining{
+                font-size: 4rem;
+                font-weight: bold;
+            }
+        }
+    }
 }
